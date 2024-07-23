@@ -1,26 +1,23 @@
-import mongoose from "mongoose";
-import toJSON from "./plugins/toJSON";
+import { NextResponse } from "next/server";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
-// LEAD SCHEMA is used to store the leads that are generated from the landing page.
-// You would use this if your product isn't ready yet and you want to collect emails
-// The <ButtonLead /> component & the /api/lead route are used to collect the emails
-const leadSchema = mongoose.Schema(
-  {
-    email: {
-      type: String,
-      trim: true,
-      lowercase: true,
-      private: true,
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-    toJSON: { virtuals: true },
+// This route is used to store the leads that are generated from the landing page.
+// The API call is initiated by <ButtonLead /> component
+export async function POST(req) {
+  const body = await req.json();
+
+  if (!body.email) {
+    return NextResponse.json({ error: "Email is required" }, { status: 400 });
   }
-);
 
-// add plugin that converts mongoose to json
-leadSchema.plugin(toJSON);
+  try {
+    const supabase = createRouteHandlerClient({ cookies });
+    await supabase.from("leads").insert({ email: body.email });
 
-export default mongoose.models.Lead || mongoose.model("Lead", leadSchema);
+    return NextResponse.json({});
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}

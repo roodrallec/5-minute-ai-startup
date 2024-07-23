@@ -1,6 +1,7 @@
 import Image from "next/image";
 import TestimonialsAvatars from "./TestimonialsAvatars";
 import config from "@/config";
+import ButtonGenerate from "./ButtonGenerate";
 
 const Hero = () => {
   return (
@@ -22,21 +23,18 @@ const Hero = () => {
         </a>
 
         <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4">
-          Ship your startup in days, not weeks
+          Ready to Master Your Finances?
         </h1>
         <p className="text-lg opacity-80 leading-relaxed">
-          The NextJS boilerplate with all you need to build your SaaS, AI tool,
-          or any other web app. From idea to production in 5 minutes.
+          Don&#39;t wait any longer to take control of your financial future. With ChatGPT Personal Finance Assistant, you can achieve your financial goals, manage your money effortlessly, and get personalized advice right at your fingertips.
         </p>
-        <button className="btn btn-primary btn-wide">
-          Get {config.appName}
-        </button>
+        <ButtonGenerate />
 
         <TestimonialsAvatars priority={true} />
       </div>
       <div className="lg:w-full">
         <Image
-          src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80"
+          src="/hero.webp"
           alt="Product Demo"
           className="w-full"
           priority={true}
